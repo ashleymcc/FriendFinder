@@ -116,11 +116,11 @@
       <h4>Does pineapple belong on pizza?</h4>
       <select data-placeholder="" class="chosen-select" id="item6">
         <option value=""></option>
-        <option value="1">1 (No Camping)</option>
+        <option value="1">1 (Strongly Disagree)</option>
         <option value="2">2</option>
         <option value="3">3</option>
         <option value="4">4</option>
-        <option value="5" selected>5 (Regularly)</option>
+        <option value="5" selected>5 (Strongly Agree)</option>
       </select>
 
       <h3><strong>Question 7</strong></h3>
@@ -195,7 +195,7 @@
             <img
               id="matchImg"
               src="https://via.placeholder.com/400x400"
-              alt="Placeholder image in case user pic doesn't show"
+              alt="Placeholder"
             />
           </div>
           <div class="modal-footer">
@@ -210,12 +210,11 @@
 </html>
 <script type="text/javascript">
 $("#submit").on("click", function(event) {
-    // prevents the default submit button action
+    
     event.preventDefault();
-    // Set local variables
+    
     var matchStatus = $(".modal-title");
     var modalBody = $(".modal-body");
-    // set responses to local variables
     var name = $("#name")
       .val()
       .trim();
@@ -230,7 +229,8 @@ $("#submit").on("click", function(event) {
     var item8 = parseInt($("#item8").val());
     var item9 = parseInt($("#item9").val());
     var item10 = parseInt($("#item10").val());
-    // Set data to be sent to server
+    
+
     var userData = {
       name: name,
       photo: photo,
@@ -247,7 +247,7 @@ $("#submit").on("click", function(event) {
         item10
       ]
     };
-    // If responses are valid...
+    
     if (
       name !== "" &&
       photo !== "" &&
@@ -262,13 +262,13 @@ $("#submit").on("click", function(event) {
       !isNaN(item9) &&
       !isNaN(item10)
     ) {
-      // Grab the URL of the website
+    
       var currentURL = window.location.origin;
-      // AJAX post the data to the friends API.
+      
       $.post(currentURL + "/api/friends", userData, function(data) {
-        // If the data has a match, then show this
+        
         if (data.name !== undefined) {
-          matchStatus.html("Your match...");
+          matchStatus.html("Your new match is...");
           modalBody.html(
             "<p>...is " +
               data.name +
@@ -276,66 +276,20 @@ $("#submit").on("click", function(event) {
               data.photo +
               '" height="200">'
           );
-        } else {
-          // If no match, show this
-          matchStatus.html("Not enough data!");
-          modalBody.html(
-            "<p>Unfortunately there is not yet enough user data to match you</p>"
-          );
-        }
-        // Toggle modal on
-        $(".modal").modal("toggle");
+        } 
+           $(".modal").modal("toggle");
       });
     } else {
-      // If the form was not valid, this error is shown
+      
       matchStatus.html("Error...");
       modalBody.html("Please answer all questions on the form.");
-      // Toggle modal on
       $(".modal").modal("toggle");
     }
   });
-  $("#friend-form").reset();
+  
+  $("#chosen-select").reset();
 
-    // <script type="text/javascript">
-    //   $("#submit").on("click", function() {
-    //     function validateForm() {
-    //       var isValid = true;
-    //       $(".form-control").each(function() {
-    //         if ($(this).val() === "") isValid = false;
-    //       });
-    //       $(".chosen-select").each(function() {
-    //         if ($(this).val() === "") isValid = false;
-    //       });
-    //       return isValid;
-    //     }
-    //     if (validateForm() == true) {
-    //       var userData = {
-    //         name: $("#name").val(),
-    //         photo: $("#photo").val(),
-    //         scores: [
-    //           $("#q1").val(),
-    //           $("#q2").val(),
-    //           $("#q3").val(),
-    //           $("#q4").val(),
-    //           $("#q5").val(),
-    //           $("#q6").val(),
-    //           $("#q7").val(),
-    //           $("#q8").val(),
-    //           $("#q9").val(),
-    //           $("#q10").val()
-    //         ]
-    //       };
-    //       var currentURL = window.location.origin;
-    //       $.post(currentURL + "/api/friends", userData, function(data) {
-    //         $("#matchName").text(data.name);
-    //         $("#matchImg").attr("src", data.photo);
-
-    //         $("#resultsModal").modal("toggle");
-    //       });
-    //     } else {
-    //       alert("Please fill out all fields before submitting!");
-    //     }
-    //     return false;
-    //   });
+    
+    
     </script>
  
